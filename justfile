@@ -10,6 +10,14 @@ compile-piantor:
 compile-pro:
     qmk compile -kb beekeeb/piantor_pro -km reikimann
 
+# Flashes the `reikimann` keymap for the Piantor
+flash-piantor:
+    qmk flash -kb beekeeb/piantor -km reikimann
+
+# Flashes the `reikimann` keymap for the Piantor Pro
+flash-pro:
+    qmk flash -kb beekeeb/piantor_pro -km reikimann
+
 # Cleans the build folder
 clean:
     qmk clean -a
