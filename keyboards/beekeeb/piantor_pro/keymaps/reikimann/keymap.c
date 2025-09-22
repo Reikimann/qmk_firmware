@@ -11,7 +11,6 @@
 //
 // TODO:
 // - Setup External QMK Userspace
-// - Add Capsword
 // - Layers
 //  - Gaming
 // - Missing functionality (macros?)
@@ -20,6 +19,9 @@
 //  - Close { on hold
 //  - Close [ on hold
 //  - Close " on hold
+// - Repeat key
+// - Alt-repeat
+// - Add Capsword
 
 #include QMK_KEYBOARD_H
 
@@ -101,9 +103,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *  ┌───┬───┬───┬───┬───┬───┐       ┌───┬───┬───┬───┬───┬───┐
    *  │   │   │   │   │   │ = │       │ / │ 6 │ 7 │ 9 │ * │   │
    *  ├───┼───┼───┼───┼───┼───┤       ├───┼───┼───┼───┼───┼───┤
-   *  │   │ ▽ │ ▽ │ ▽ │ ▽ │ % │       │ + │ 3 │ 4 │ 5 │ - │   │
+   *  │   │ ▽ │ ▽ │ ▽ │ ▽ │ % │       │ + │ 3 │ 4 │ 5 │ 0 │   │
    *  ├───┼───┼───┼───┼───┼───┤       ├───┼───┼───┼───┼───┼───┤
-   *  │   │   │   │ ( │ ) │ ^ │       │ 0 │ 1 │ 2 │ 3 │ , │   │
+   *  │   │   │   │ ( │ ) │ ^ │       │ - │ 1 │ 2 │ 3 │ , │   │
    *  └───┴───┴───┴───┴───┴───┘       └───┴───┴───┴───┴───┴───┘
    *                ┌───┐                   ┌───┐
    *                │ ▽ ├───┐           ┌───┤ ▽ │
@@ -113,8 +115,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    */
   [_NUMPAD] = LAYOUT_split_3x6_3(
     QK_BOOT, KC_NO,   KC_NO,   KC_NO,   KC_NO,   DK_EQL,                           DK_SLSH, KC_7, KC_8, KC_9, DK_ASTR, KC_NO,
-    KC_NO,   _______, _______, _______, _______, DK_PERC,                          DK_PLUS, KC_4, KC_5, KC_6, DK_MINS, KC_NO,
-    KC_NO,   KC_NO,   KC_NO,   DK_LPRN, DK_RPRN, DK_CIRC,                          KC_0,    KC_1, KC_2, KC_3, KC_PCMM, KC_NO,
+    KC_NO,   _______, _______, _______, _______, DK_PERC,                          DK_PLUS, KC_4, KC_5, KC_6, KC_0,    KC_NO,
+    KC_NO,   KC_NO,   KC_NO,   DK_LPRN, DK_RPRN, DK_CIRC,                          DK_MINS, KC_1, KC_2, KC_3, KC_PCMM, KC_NO,
                                           _______, _______, _______,      _______, _______, _______
   ),
   /*
@@ -157,6 +159,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *                └───┤   ├───┐   ┌───┤   ├───┘
    *                    └───┤   │   │   ├───┘
    *                        └───┘   └───┘
+   * Missing features:
+   * - Shift when holding paste button
+   * - Ctrl when holding copy button
+   *
    */
   [_NAVIGTION] = LAYOUT_split_3x6_3(
     KC_NO, KC_NO, SEARCH_IN_NEWTAB, C(KC_W),     C(KC_T),   LCS(KC_T),                       KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_NO, KC_NO,
