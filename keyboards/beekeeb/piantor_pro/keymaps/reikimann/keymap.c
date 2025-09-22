@@ -5,12 +5,14 @@
 // - If I need to enter the bootloader, add the QK_BOOT keycode
 // - Maybe use TT(layer) or layer lock key on layers such as numpad
 //
+// TEST:
+// - Function layer
+// - Mouse
+//
 // TODO:
 // - Setup External QMK Userspace
 // - Add Capsword
 // - Layers
-//  - Function
-//  - Mouse
 //  - Gaming
 // - Missing functionality (macros?)
 //  - Close < on hold
@@ -35,7 +37,7 @@ enum layer_names {
 };
 
 enum custom_keycodes {
-    SEARCH_COPIED_IN_NEWTAB = SAFE_RANGE,
+    SEARCH_IN_NEWTAB = SAFE_RANGE,
 };
 
 // -------------------
@@ -56,7 +58,7 @@ combo_t key_combos[] = {
 // -------------------
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case SEARCH_COPIED_IN_NEWTAB:
+        case SEARCH_IN_NEWTAB:
             if (record->event.pressed) {
                 SEND_STRING(SS_LCTL("ct") SS_DELAY(200) SS_LCTL("lv") "\n");
             };
@@ -90,10 +92,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *                        └───┘   └───┘
    */
   [_BASE] = LAYOUT_split_3x6_3(
-    XXXXXXX, KC_Q,        KC_W,        KC_E,        KC_R,        KC_T,                        KC_Y, KC_U,        KC_I,        KC_O,        KC_P,         DK_ARNG,
-    XXXXXXX, ALT_T(KC_A), GUI_T(KC_S), CTL_T(KC_D), SFT_T(KC_F), KC_G,                        KC_H, SFT_T(KC_J), CTL_T(KC_K), GUI_T(KC_L), ALT_T(DK_AE), XXXXXXX,
-    KC_CAPS, KC_Z,        KC_X,        KC_C,        KC_V,        KC_B,                        KC_N, KC_M,        KC_COMM,     KC_DOT,      DK_MINS,      XXXXXXX,
-                              KC_ESC, LT(_NAVIGTION, KC_SPC), LT(_NUMPAD, KC_TAB),      KC_ENT, LT(_SYMBOLS, KC_BSPC), KC_DEL
+    KC_NO,   KC_Q,        KC_W,        KC_E,        KC_R,        KC_T,                        KC_Y, KC_U,        KC_I,        KC_O,        KC_P,         DK_ARNG,
+    KC_NO,   ALT_T(KC_A), GUI_T(KC_S), CTL_T(KC_D), SFT_T(KC_F), KC_G,                        KC_H, SFT_T(KC_J), CTL_T(KC_K), GUI_T(KC_L), ALT_T(DK_AE), KC_NO,
+    KC_CAPS, KC_Z,        KC_X,        KC_C,        KC_V,        KC_B,                        KC_N, KC_M,        KC_COMM,     KC_DOT,      DK_MINS,      KC_NO,
+               LT(_MOUSE, KC_ESC), LT(_NAVIGTION, KC_SPC), LT(_NUMPAD, KC_TAB),      KC_ENT, LT(_SYMBOLS, KC_BSPC), LT(_FUNCTION, KC_DEL)
   ),
   /*
    *  ┌───┬───┬───┬───┬───┬───┐       ┌───┬───┬───┬───┬───┬───┐
@@ -110,9 +112,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *                        └───┘   └───┘
    */
   [_NUMPAD] = LAYOUT_split_3x6_3(
-    QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, DK_EQL,                           DK_SLSH, KC_7, KC_8, KC_9, DK_ASTR, XXXXXXX,
-    XXXXXXX, _______, _______, _______, _______, DK_PERC,                          DK_PLUS, KC_4, KC_5, KC_6, DK_MINS, XXXXXXX,
-    XXXXXXX, XXXXXXX, XXXXXXX, DK_LPRN, DK_RPRN, DK_CIRC,                          KC_0,    KC_1, KC_2, KC_3, KC_PCMM, XXXXXXX,
+    QK_BOOT, KC_NO,   KC_NO,   KC_NO,   KC_NO,   DK_EQL,                           DK_SLSH, KC_7, KC_8, KC_9, DK_ASTR, KC_NO,
+    KC_NO,   _______, _______, _______, _______, DK_PERC,                          DK_PLUS, KC_4, KC_5, KC_6, DK_MINS, KC_NO,
+    KC_NO,   KC_NO,   KC_NO,   DK_LPRN, DK_RPRN, DK_CIRC,                          KC_0,    KC_1, KC_2, KC_3, KC_PCMM, KC_NO,
                                           _______, _______, _______,      _______, _______, _______
   ),
   /*
@@ -137,9 +139,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *
    */
   [_SYMBOLS] = LAYOUT_split_3x6_3(
-    XXXXXXX, DK_ACUT, DK_QUOT, DK_HASH, DK_PERC, DK_MINS,                         DK_GRV,  DK_LCBR, DK_AT,   DK_RCBR, DK_DIAE, XXXXXXX,
-    XXXXXXX, DK_DLR,  DK_BSLS, DK_EXLM, DK_SLSH, DK_EQL,                          DK_DQUO, DK_LPRN, DK_QUES, DK_RPRN, DK_ASTR, XXXXXXX,
-    XXXXXXX, DK_SECT, DK_LABK, DK_AMPR, DK_RABK, DK_PLUS,                         DK_TILD, DK_LBRC, DK_PIPE, DK_RBRC, DK_CIRC, XXXXXXX,
+    KC_NO, DK_ACUT, DK_QUOT, DK_HASH, DK_PERC, DK_MINS,                         DK_GRV,  DK_LCBR, DK_AT,   DK_RCBR, DK_DIAE, KC_NO,
+    KC_NO, DK_DLR,  DK_BSLS, DK_EXLM, DK_SLSH, DK_EQL,                          DK_DQUO, DK_LPRN, DK_QUES, DK_RPRN, DK_ASTR, KC_NO,
+    KC_NO, DK_SECT, DK_LABK, DK_AMPR, DK_RABK, DK_PLUS,                         DK_TILD, DK_LBRC, DK_PIPE, DK_RBRC, DK_CIRC, KC_NO,
                                         _______, _______, _______,      _______, _______, _______
   ),
   /*
@@ -157,10 +159,55 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *                        └───┘   └───┘
    */
   [_NAVIGTION] = LAYOUT_split_3x6_3(
-    XXXXXXX, XXXXXXX, SEARCH_COPIED_IN_NEWTAB, C(KC_W),     C(KC_T),   LCS(KC_T),                       KC_HOME, KC_PGDN, KC_PGUP, KC_END,  XXXXXXX, XXXXXXX,
-    XXXXXXX, C(KC_A), C(KC_X),                 C(KC_C),     C(KC_V),   C(KC_Z),                         KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, XXXXXXX, XXXXXXX,
-    XXXXXXX, XXXXXXX, XXXXXXX,                 LCS(KC_TAB), C(KC_TAB), C(KC_Y),                         XXXXXXX, KC_WBAK, KC_WFWD, XXXXXXX, XXXXXXX, XXXXXXX,
-                                               _______, _______, _______,      _______, _______, _______
+    KC_NO, KC_NO, SEARCH_IN_NEWTAB, C(KC_W),     C(KC_T),   LCS(KC_T),                       KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_NO, KC_NO,
+    KC_NO, C(KC_A), C(KC_X),        C(KC_C),     C(KC_V),   C(KC_Z),                         KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_NO, KC_NO,
+    KC_NO, KC_NO, KC_NO,            LCS(KC_TAB), C(KC_TAB), C(KC_Y),                         KC_NO, KC_WBAK, KC_WFWD, KC_NO, KC_NO, KC_NO,
+                                                    _______, _______, _______,      _______, _______, _______
+  ),
+  /*
+   *  ┌───┬───┬───┬───┬───┬───┐       ┌───┬───┬───┬───┬───┬───┐
+   *  │   │   │   │   │   │   │       │   │   │   │   │   │   │
+   *  ├───┼───┼───┼───┼───┼───┤       ├───┼───┼───┼───┼───┼───┤
+   *  │   │   │   │   │   │   │       │   │   │   │   │   │   │
+   *  ├───┼───┼───┼───┼───┼───┤       ├───┼───┼───┼───┼───┼───┤
+   *  │   │   │   │   │   │   │       │   │   │   │   │   │   │
+   *  └───┴───┴───┴───┴───┴───┘       └───┴───┴───┴───┴───┴───┘
+   *                ┌───┐                   ┌───┐
+   *                │   ├───┐           ┌───┤   │
+   *                └───┤   ├───┐   ┌───┤   ├───┘
+   *                    └───┤   │   │   ├───┘
+   *                        └───┘   └───┘
+   *
+   * Missing features:
+   * - Navigate to gaming layer
+   *
+   */
+  [_FUNCTION] = LAYOUT_split_3x6_3(
+    // |- This is the gaming key
+    KC_NO, KC_NO,   S(KC_PSCR), KC_MPRV, KC_MNXT, KC_MPLY,                       KC_NO, KC_F7, KC_F8, KC_F9, KC_F12, KC_NO,
+    KC_NO, KC_LSFT, KC_PSCR,    KC_VOLD, KC_VOLU, KC_MUTE,                       KC_NO, KC_F4, KC_F5, KC_F6, KC_F11, KC_NO,
+    KC_NO, KC_NO,   C(KC_PSCR), KC_BRID, KC_BRIU, KC_NO,                         KC_NO, KC_F1, KC_F2, KC_F3, KC_F10, KC_NO,
+                                        _______, _______, _______,      _______, _______, _______
+  ),
+  /*
+   *  ┌───┬───┬───┬───┬───┬───┐       ┌───┬───┬───┬───┬───┬───┐
+   *  │   │   │   │   │   │   │       │   │   │   │   │   │   │
+   *  ├───┼───┼───┼───┼───┼───┤       ├───┼───┼───┼───┼───┼───┤
+   *  │   │   │   │   │   │   │       │   │   │   │   │   │   │
+   *  ├───┼───┼───┼───┼───┼───┤       ├───┼───┼───┼───┼───┼───┤
+   *  │   │   │   │   │   │   │       │   │   │   │   │   │   │
+   *  └───┴───┴───┴───┴───┴───┘       └───┴───┴───┴───┴───┴───┘
+   *                ┌───┐                   ┌───┐
+   *                │   ├───┐           ┌───┤   │
+   *                └───┤   ├───┐   ┌───┤   ├───┘
+   *                    └───┤   │   │   ├───┘
+   *                        └───┘   └───┘
+   */
+  [_MOUSE] = LAYOUT_split_3x6_3(
+   KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,                         MS_WHLL, MS_WHLD, MS_WHLU, MS_WHLR, KC_NO, KC_NO,
+   KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,                         MS_LEFT, MS_DOWN, MS_UP,   MS_RGHT, KC_NO, KC_NO,
+   KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,                         KC_NO,   MS_ACL0, MS_ACL1, MS_ACL2, KC_NO, KC_NO,
+                            _______, _______, _______,      MS_BTN2, MS_BTN1, MS_BTN3
   ),
 };
 
